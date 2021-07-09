@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ page import="cybersoft.java12.crmapp.util.Path" %>
+<%@ page import="cybersoft.java12.crmapp.util.UrlConst" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <head>
 	<title>

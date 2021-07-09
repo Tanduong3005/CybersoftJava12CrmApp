@@ -11,32 +11,26 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cybersoft.java12.crmapp.util.ServletConst;
 import cybersoft.java12.crmapp.util.UrlConst;
-
-@WebFilter(filterName = ServletConst.ENCODINGFILTER, urlPatterns = {
-		UrlConst.ROOT
-})
-public class EncodingFilter implements Filter{
-	
-	private int requestCount=1;
-	
+@WebFilter(urlPatterns = UrlConst.ROOT)
+public class AuthFilter implements Filter{
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
-		int count = requestCount++;
 		
-		//xu ly request
-		System.out.println("Request count >>>" + count);
-		req.setCharacterEncoding("UTF-8");
-		System.out.println("Set charset for Request. req: " + count);
-		chain.doFilter(request, response);
-		//xu ly response
-		resp.setCharacterEncoding("UTF-8");
-		System.out.println("Set charset for Response. resp: " + count);
-
+		String servletPath = req.getServletPath();
+		if(servletPath.startsWith(UrlConst.ASSETS) || servletPath.startsWith(UrlConst.AUTH_LOGIN))
+				chain.doFilter(req, resp);
+		else {
+			String status = String.valueOf(req.getSession().getAttribute("status"));
+			System.out.println("STATUS: " + status);
+			if(status.equals("null"))
+				resp.sendRedirect(req.getContextPath() + UrlConst.AUTH_LOGIN);
+			else
+				chain.doFilter(request, response);
+		}
+		
 	}
 }

@@ -8,11 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cybersoft.java12.crmapp.util.Path;
-import cybersoft.java12.crmapp.util.Url;
+import cybersoft.java12.crmapp.util.JspConst;
+import cybersoft.java12.crmapp.util.ServletConst;
+import cybersoft.java12.crmapp.util.UrlConst;
 
 
-@WebServlet(name = "homeServlet", urlPatterns = Path.HOME)
+@WebServlet(name = ServletConst.HOME, urlPatterns = UrlConst.HOME)
 public class HomeServlet extends HttpServlet{
 	
 	private static final long serialVersionUID = -5747914875620363540L;
@@ -20,7 +21,7 @@ public class HomeServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		req.getRequestDispatcher(Url.DASHBOARD).forward(req, resp);
+		req.getRequestDispatcher(JspConst.DASHBOARD).forward(req, resp);
 		
 	}
 }

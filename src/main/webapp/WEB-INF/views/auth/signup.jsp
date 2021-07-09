@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ page import="cybersoft.java12.crmapp.util.Path" %>
+<%@ page import="cybersoft.java12.crmapp.util.UrlConst" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -42,7 +42,7 @@
         <h4 class="m-0">Sign up!</h4>
         <p class="mb-5">Create an account now</p>
 
-        <form action="<c:url value="<%=Path.SIGNUP %>" />" method="post">
+        <form action="<c:url value="<%=UrlConst.AUTH_SIGNUP %>" />" method="post">
             <div class="form-group">
                 <label class="text-label" for="name_2">Name:</label>
                 <div class="input-group input-group-merge">
@@ -84,7 +84,7 @@
             </div>
             <div class="form-group text-center">
                 <button class="btn btn-primary mb-2" type="submit">Create Account</button><br>
-                <a class="text-body text-underline" href="<c:url value="<%=Path.LOGIN %>" />">Have an account? Login</a>
+                <a class="text-body text-underline" href="<c:url value="<%=UrlConst.AUTH_LOGIN %>" />">Have an account? Login</a>
             </div>
         </form>
     </div>

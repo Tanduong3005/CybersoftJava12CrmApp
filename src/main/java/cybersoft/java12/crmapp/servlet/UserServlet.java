@@ -8,17 +8,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cybersoft.java12.crmapp.util.Path;
-import cybersoft.java12.crmapp.util.Url;
+import cybersoft.java12.crmapp.util.JspConst;
+import cybersoft.java12.crmapp.util.ServletConst;
+import cybersoft.java12.crmapp.util.UrlConst;
 
 
-@WebServlet(name = "userServlet", urlPatterns = {Path.USER_PROFILE})
+@WebServlet(name = ServletConst.USER, urlPatterns = {UrlConst.USER_PROFILE})
 public class UserServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		switch (req.getServletPath()) {
-		case Path.USER_PROFILE:
-			req.getRequestDispatcher(Url.USER_PROFILE).forward(req, resp);
+		case UrlConst.USER_PROFILE:
+			req.getRequestDispatcher(JspConst.USER_PROFILE).forward(req, resp);
 			break;
 
 		default:

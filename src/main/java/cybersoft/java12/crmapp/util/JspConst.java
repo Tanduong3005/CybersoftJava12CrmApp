@@ -1,6 +1,6 @@
 package cybersoft.java12.crmapp.util;
 
-public class Url {
+public class JspConst {
 	// url
 	public static final String DASHBOARD = "/WEB-INF/views/home/homepage.jsp";
 	public static final String AUTH_LOGIN = "/WEB-INF/views/auth/login.jsp";
@@ -9,4 +9,5 @@ public class Url {
 	
 	// USER
 	public static final String USER_PROFILE = "/WEB-INF/views/user/profile.jsp";
+	
 }
