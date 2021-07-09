@@ -54,6 +54,7 @@ public class AuthServlet extends HttpServlet {
 			else
 				req.getRequestDispatcher(JspConst.AUTH_LOGIN)
 					.forward(req, resp);
+			
 			break;
 //			//session demo
 //			
