@@ -1,24 +1,23 @@
-package cybersoft.java12.crmapp.model;
+package cybersoft.java12.crmapp.dto;
 
-public class User {
-	private int id;
+//import cybersoft.java12.crmapp.model.Role;
+
+public class UserCreateDto {
+	/* Data Transfer Object */
 	private String email;
 	private String password;
 	private String name;
 	private String address;
 	private String phone;
-	private Role role;
-//	
-//	public User() {
-//		
-//	}
+	private int roleId;
 	
-
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
+	public UserCreateDto(String email, String password, String name, String address, String phone, int roleId) {
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.address = address;
+		this.phone = phone;
+		this.roleId = roleId;
 	}
 	public String getEmail() {
 		return email;
@@ -50,20 +49,12 @@ public class User {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public Role getRole() {
-		return role;
+	public int getRoleId() {
+		return roleId;
 	}
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 	
-//	public User(int id, String email, String password, String name, String address, String phone, Role role){
-//		this.id = id;
-//		this.email = email;
-//		this.password = password;
-//		this.name = name;
-//		this.address = address;
-//		this.phone = phone;
-//		this.role = role;
-//	}
+	
 }

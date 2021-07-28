@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="cybersoft.java12.crmapp.util.Path" %>
+<%@ page import="cybersoft.java12.crmapp.util.UrlConst" %>
 <!-- Header Layout -->
 <div class="mdk-header-layout js-mdk-header-layout">
 <!-- Header -->
@@ -130,17 +130,17 @@
                                 <div>@tuanphan</div>
                             </div>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item active" href="<c:url value="<%=Path.HOME %>" />">
+                            <a class="dropdown-item active" href="<c:url value="<%=UrlConst.HOME %>" />">
                                 Dashboard
                             </a>
-                            <a class="dropdown-item" href="<c:url value="<%=Path.USER_PROFILE %>" />"> 
+                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.USER_PROFILE %>" />"> 
                                 My profile
                             </a>
-                            <a class="dropdown-item" href="<c:url value="<%=Path.USER_EDIT %>" />">
+                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.USER_UPDATE %>" />">
                                 Edit account
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="<c:url value="<%=Path.LOGOUT %>" />">Logout</a>
+                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.AUTH_LOGOUT %>" />">Logout</a>
                         </div>
                     </li>
                 </ul>
