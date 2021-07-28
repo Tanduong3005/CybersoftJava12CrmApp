@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,10 +21,10 @@ public class ProjectDao {
 
 	public List<Project> findAllProject() throws SQLException {
 		List<Project> projects = new LinkedList<>();
-
+		List<User> users = new ArrayList<>();
 		Connection connection = MySqlConnection.getConnection();
 		String query = "SELECT p.id as id, p.name as name, p.start_date as start_date, p.end_date as end_date, "
-				+ "u.id as owner_id " + "FROM project p, user u " + "WHERE p.owner = u.id";
+				+ "u.id as owner_id, u.name as owner_name " + "FROM project p, user u " + "WHERE p.owner = u.id";
 
 		try {
 			PreparedStatement statement = connection.prepareStatement(query);
@@ -39,8 +40,14 @@ public class ProjectDao {
 				project.setEndDate(resultSet.getDate("end_date"));
 
 				int ownerId = resultSet.getInt("owner_id");
-				User owner = userDao.findUserById(ownerId);
+				User owner = getUserFromList(users, ownerId);
+				if (owner == null) {
+					owner = new User();
+					owner.setId(resultSet.getInt("owner_id"));
+					owner.setName(resultSet.getString("owner_name"));
 
+					users.add(owner);
+				}
 				project.setOwner(owner);
 
 				projects.add(project);
@@ -54,6 +61,13 @@ public class ProjectDao {
 		}
 
 		return projects;
+	}
+
+	private User getUserFromList(List<User> users, int ownerId) {
+		for (User user : users)
+			if (user.getId() == ownerId)
+				return user;
+		return null;
 	}
 
 	public Project findProjectById(int id) throws SQLException {

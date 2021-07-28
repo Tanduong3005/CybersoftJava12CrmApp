@@ -5,8 +5,8 @@ import java.sql.Date;
 public class TaskCreateDto {
 	private String name;
 	private String description;
-	private Date startDate;
-	private Date endDate;
+	private String startDate;
+	private String endDate;
 	private int statusId;
 	private int projectId;
 	private int userId;
@@ -27,19 +27,19 @@ public class TaskCreateDto {
 		this.description = description;
 	}
 
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 
@@ -67,13 +67,12 @@ public class TaskCreateDto {
 		this.userId = userId;
 	}
 
-	public TaskCreateDto(String name, String description, Date startDate, Date endDate, int statusId, int projectId,
+	public TaskCreateDto(String name, String description, String start_date, String end_date, int statusId, int projectId,
 			int userId) {
-		super();
 		this.name = name;
 		this.description = description;
-		this.startDate = startDate;
-		this.endDate = endDate;
+		this.startDate = start_date;
+		this.endDate = end_date;
 		this.statusId = statusId;
 		this.projectId = projectId;
 		this.userId = userId;

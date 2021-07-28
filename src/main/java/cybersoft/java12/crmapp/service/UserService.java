@@ -68,8 +68,5 @@ public class UserService {
 		}
 	}
 	
-	public Role getRoleById(int id) throws SQLException {
-		return dao.getRoleById(id);
-	}
 
 }

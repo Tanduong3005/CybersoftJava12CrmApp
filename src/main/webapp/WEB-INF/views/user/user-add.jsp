@@ -58,10 +58,13 @@
                         </div>
                         <div class="form-group">
                                 <label for="role">Role</label>
-                                <input type="text" class="form-control" name="role" id="role" value="${user.role.id }">
-                                
-
-                            </div>
+                                <select id="role" name="role" data-toggle="select" class="form-control">
+                                	<c:forEach var="role"  items="${roles }">
+                                    	<option value="${role.id }">${role.name }</option> 
+                                    	                  
+                                    </c:forEach>
+                                </select>
+                        </div>
                         <button class="btn btn-primary w-25 justify-content-center" type="submit" class="btn btn-primary">Add</button>
                     </form>
                 </div>

@@ -12,8 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import cybersoft.java12.crmapp.dto.TaskCreateDto;
 import cybersoft.java12.crmapp.dto.UserCreateDto;
+import cybersoft.java12.crmapp.model.Project;
+import cybersoft.java12.crmapp.model.Role;
 import cybersoft.java12.crmapp.model.Task;
+import cybersoft.java12.crmapp.model.User;
+import cybersoft.java12.crmapp.service.ProjectService;
 import cybersoft.java12.crmapp.service.TaskService;
+import cybersoft.java12.crmapp.service.UserService;
 import cybersoft.java12.crmapp.util.JspConst;
 import cybersoft.java12.crmapp.util.ServletConst;
 import cybersoft.java12.crmapp.util.UrlConst;
@@ -23,12 +28,16 @@ import cybersoft.java12.crmapp.util.UrlConst;
 public class TaskServlet extends HttpServlet {
 
 	private TaskService service;
+	private UserService userService;
+	private ProjectService projectService;
 
 	@Override
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
 		super.init();
 		service = new TaskService();
+		userService = new UserService();
+		projectService = new ProjectService();
 	}
 
 	@Override
@@ -92,38 +101,54 @@ public class TaskServlet extends HttpServlet {
 	}
 
 	private void getTaskAdd(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		List<Project> projects = projectService.findAllProject();
+		if (projects != null || !projects.isEmpty()) {
+			req.setAttribute("projects", projects);
+		}
+		List<User> users = userService.findAll();
+		if (users != null || !users.isEmpty()) {
+			req.setAttribute("users", users);
+		}
 		req.getRequestDispatcher(JspConst.TASK_ADD).forward(req, resp);
 	}
 
 	private void getTaskUpdate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		List<Project> projects = projectService.findAllProject();
+		if (projects != null || !projects.isEmpty()) {
+			req.setAttribute("projects", projects);
+		}
+		List<User> users = userService.findAll();
+		if (users != null || !users.isEmpty()) {
+			req.setAttribute("users", users);
+		}
 		int idToUpdate = Integer.parseInt(req.getParameter("id"));
 		Task taskToUpdate = service.findTaskById(idToUpdate);
-		
-		req.setAttribute("tasks", taskToUpdate);
+		req.setAttribute("task", taskToUpdate);
 		req.getRequestDispatcher(JspConst.TASK_UPDATE).forward(req, resp);
 	}
 
-	private void getTaskDelete(HttpServletRequest req, HttpServletResponse resp) {
+	private void getTaskDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		int idToDelete = Integer.parseInt(req.getParameter("id"));
 
+		service.deleteTaskById(idToDelete);
+
+		resp.sendRedirect(req.getContextPath() + UrlConst.TASK_DASHBOARD);
 	}
 
 	private void postTaskAdd(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		TaskCreateDto dto = extractDtoFromReq(req);
-
-		service.addNewTask(dto);
-
 		resp.sendRedirect(req.getContextPath() + UrlConst.TASK_DASHBOARD);
 	}
 
 	private TaskCreateDto extractDtoFromReq(HttpServletRequest req) {
 		String name = req.getParameter("name");
 		String description = req.getParameter("description");
-		Date start_date = (Date)req.getAttribute("start_date");
-		Date end_date = (Date)req.getAttribute("end_date");
-		int roleId = Integer.parseInt(req.getParameter("roleId"));
-		int statusId = Integer.parseInt(req.getParameter("statusId"));
-		int projectId = Integer.parseInt(req.getParameter("projectId"));
-		return new TaskCreateDto(name, description, start_date, end_date, roleId, statusId, projectId);
+		String startDate = req.getParameter("start_date");
+		String endDate = req.getParameter("end_date");
+		int userId = Integer.parseInt(req.getParameter("user"));
+		int statusId = Integer.parseInt(req.getParameter("status"));
+		int projectId = Integer.parseInt(req.getParameter("project"));
+		return new TaskCreateDto(name, description, startDate, endDate, statusId, projectId, userId);
 	
 	}
 

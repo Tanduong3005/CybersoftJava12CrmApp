@@ -10,6 +10,7 @@ import java.util.List;
 
 import cybersoft.java12.crmapp.dbconnection.MySqlConnection;
 import cybersoft.java12.crmapp.dto.ProjectCreateDto;
+import cybersoft.java12.crmapp.dto.TaskCreateDto;
 import cybersoft.java12.crmapp.dto.UserCreateDto;
 import cybersoft.java12.crmapp.model.Project;
 import cybersoft.java12.crmapp.model.Role;
@@ -37,7 +38,8 @@ public class TaskDao {
 				+ "s.id as status_id, s.name as status_name, s.description as status_description, "
 				+ "p.id as project_id,  p.name as project_name "
 				+ "FROM task t, user u, status s, project p " + "WHERE t.user_id = u.id " + "AND t.project_id = p.id "
-				+ "AND t.status_id = s.id";
+				+ "AND t.status_id = s.id "
+				+ "ORDER BY t.id";
 
 		try {
 			PreparedStatement statement = connection.prepareStatement(query);
@@ -176,13 +178,52 @@ public class TaskDao {
 		return task;
 	}
 
-	public void addNewTask() {
-		// TODO Auto-generated method stub
+	public void addNewTask(TaskCreateDto dto) throws SQLException {
+		String query = "INSERT INTO task(name, start_date, end_date, status_id, project_id, user_id) " + "VALUES(?,?,?,?,?,?)";
+
+		Connection connection = MySqlConnection.getConnection();
+
+		try {
+			PreparedStatement statement = connection.prepareStatement(query);
+
+			statement.setNString(1, dto.getName());
+			statement.setString(2, dto.getStartDate());
+			statement.setString(3, dto.getEndDate());
+			statement.setInt(4, dto.getStatusId());
+			statement.setInt(5, dto.getProjectId());
+			statement.setInt(6, dto.getUserId());
+
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("Unable to connect to database.");
+			e.printStackTrace();
+		} finally {
+			connection.close();
+		}
 
 	}
 
-	public void updateTask() {
-		// TODO Auto-generated method stub
+	public void updateTask(TaskCreateDto dto, int idToUpdate) throws SQLException {
+		Connection connection = MySqlConnection.getConnection();
+		String query = "UPDATE task SET name = ?, start_date = ?, end_date = ?, status_id = ?, project_id = ?, user_id = ? WHERE id = ?";
+		int result=0;
+		try {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, dto.getName());
+			statement.setString(2, dto.getStartDate());
+			statement.setString(3, dto.getEndDate());
+			statement.setInt(4, dto.getStatusId());
+			statement.setInt(5, dto.getProjectId());
+			statement.setInt(6, dto.getUserId());
+			statement.setInt(7, idToUpdate);
+			result = statement.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("Unable to connect to database.");
+			e.printStackTrace();
+		} finally {
+			connection.close();
+		}
 
 	}
 
@@ -205,5 +246,24 @@ public class TaskDao {
 			if (user.getId() == userId)
 				return user;
 		return null;
+	}
+
+	public void deleteTaskById(int idToDelete) throws SQLException {
+		String query = "DELETE FROM task WHERE id = ?";
+		Connection connection = MySqlConnection.getConnection();
+
+		try {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, idToDelete);
+
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("Unable to connect to database.");
+			e.printStackTrace();
+		} finally {
+			connection.close();
+		}
+		
 	}
 }

@@ -54,16 +54,30 @@
 								class="form-control" name="end_date" id="end_date">
 						</div>
 						<div class="form-group">
-							<label for="address">Address:</label>
-							<textarea type="text" class="form-control" name="address"
-								id="address" aria-label="With textarea"></textarea>
+							<label for="status">Status:</label> <select id="status"
+								name="status" data-toggle="select" class="form-control">
+								<option selected="" value="1">Not Started</option>
+								<option value="2">In Progress</option>
+								<option value="3">Complete</option>
+							</select>
 						</div>
 						<div class="form-group">
-							<label for="role">Role</label> <input type="text"
-								class="form-control" name="role" id="role"
-								value="${user.role.id }">
+							<label for="project">Project Name:</label> <select id="project"
+								name="project" data-toggle="select" class="form-control">
+								<c:forEach var="project" items="${projects }">
+									<option value="${project.id }">${project.name }</option>
 
+								</c:forEach>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="user">User Name:</label> <select id="user"
+								name="user" data-toggle="select" class="form-control">
+								<c:forEach var="user" items="${users }">
+									<option value="${user.id }">${user.name }</option>
 
+								</c:forEach>
+							</select>
 						</div>
 						<button class="btn btn-primary w-25 justify-content-center"
 							type="submit" class="btn btn-primary">Add</button>

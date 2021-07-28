@@ -1,7 +1,6 @@
 package cybersoft.java12.crmapp.servlet;
 
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cybersoft.java12.crmapp.dto.UserCreateDto;
+import cybersoft.java12.crmapp.model.Role;
 import cybersoft.java12.crmapp.model.User;
+import cybersoft.java12.crmapp.service.RoleService;
 import cybersoft.java12.crmapp.service.UserService;
 import cybersoft.java12.crmapp.util.JspConst;
 import cybersoft.java12.crmapp.util.ServletConst;
@@ -21,12 +22,14 @@ import cybersoft.java12.crmapp.util.UrlConst;
 		UrlConst.USER_UPDATE, UrlConst.USER_DELETE })
 public class UserServlet extends HttpServlet {
 	private UserService service;
+	private RoleService roleservice;
 
 	@Override
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
 		super.init();
 		service = new UserService();
+		roleservice = new RoleService();
 	}
 
 	@Override
@@ -98,11 +101,19 @@ public class UserServlet extends HttpServlet {
 	}
 
 	private void getUserAdd(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		List<Role> roles = roleservice.findAllRole();
+		if (roles != null || !roles.isEmpty()) {
+			req.setAttribute("roles", roles);
+		}
 		req.getRequestDispatcher(JspConst.USER_ADD).forward(req, resp);
 	}
 
 	private void getUserUpdate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		List<Role> roles=roleservice.findAllRole();
+		if(roles!=null || !roles.isEmpty()) {
+			req.setAttribute("roles", roles);
+		}
+		
 		int idToUpdate = Integer.parseInt(req.getParameter("id"));
 		User userToUpdate = service.findUserById(idToUpdate);
 

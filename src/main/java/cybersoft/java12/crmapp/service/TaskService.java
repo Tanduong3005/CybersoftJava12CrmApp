@@ -10,10 +10,11 @@ import cybersoft.java12.crmapp.model.Task;
 public class TaskService {
 
 	private TaskDao taskDao;
-	
+
 	public TaskService() {
 		taskDao = new TaskDao();
 	}
+
 	public List<Task> findAllTask() {
 		List<Task> tasks = null;
 		try {
@@ -21,9 +22,6 @@ public class TaskService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("nhu quan que");
-		System.out.println(tasks.get(0).getStartDate());
-		
 		return tasks;
 	}
 
@@ -34,26 +32,34 @@ public class TaskService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println("nhu quan que");
+		System.out.println(task.getStartDate());
+		System.out.println(task.getName());
 		return task;
 	}
 
 	public void addNewTask(TaskCreateDto dto) {
-//		try {
-//			taskDao.addNewTask();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-		
-		
+		try {
+			taskDao.addNewTask(dto);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void updateTask(TaskCreateDto dto, int idToUpdate) {
-//		try {
-//			taskDao.updateTask();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}		
+		try {
+			taskDao.updateTask(dto, idToUpdate);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+	}
+
+	public void deleteTaskById(int idToDelete) {
+		try {
+			taskDao.deleteTaskById(idToDelete);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
 	}
 
 }

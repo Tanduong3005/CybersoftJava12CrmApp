@@ -188,9 +188,4 @@ public class UserDao {
 		}
 	}
 
-	public Role getRoleById(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
