@@ -1,6 +1,7 @@
 package cybersoft.java12.crmapp.service;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -66,6 +67,30 @@ public class UserService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public List<User> sortUserById(int id) {
+		List<User>users=new LinkedList<User>();
+		users=findAll();
+		for(int i=1;i<users.size();i++) {
+			if(users.get(i).getId()==id) {
+				User user=new User();
+				user=users.get(i);
+				users.set(i, users.get(0));
+				users.set(0, user);
+			}
+		}
+		return users;
+	}
+
+	public List<User> findStaffNotJoinProjectStaff(int idToUpdate) {
+		List<User> users = null;
+		try {
+			users = dao.findStaffNotJoinProjectStaff(idToUpdate);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
 	}
 	
 

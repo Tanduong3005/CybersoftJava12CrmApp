@@ -11,6 +11,10 @@ public class UserCreateDto {
 	private String phone;
 	private int roleId;
 	
+	public UserCreateDto() {
+		
+	}
+	
 	public UserCreateDto(String email, String password, String name, String address, String phone, int roleId) {
 		this.email = email;
 		this.password = password;

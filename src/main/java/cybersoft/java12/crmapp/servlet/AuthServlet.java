@@ -1,8 +1,6 @@
 package cybersoft.java12.crmapp.servlet;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import cybersoft.java12.crmapp.model.User;
 import cybersoft.java12.crmapp.service.AuthService;
 import cybersoft.java12.crmapp.util.JspConst;
 import cybersoft.java12.crmapp.util.ServletConst;
@@ -89,8 +86,8 @@ public class AuthServlet extends HttpServlet {
 			
 			// session demo
 			HttpSession currentSession = req.getSession();
-			String pingo = (String)currentSession.getAttribute("pingo");
-			System.out.printf("Pingo: %s\n", pingo);
+//			String pingo = (String)currentSession.getAttribute("pingo");
+//			System.out.printf("Pingo: %s\n", pingo);
 			
 			// logic dang nhap
 			
@@ -101,6 +98,7 @@ public class AuthServlet extends HttpServlet {
 			
 			if(isLogin) {
 				currentSession.setAttribute("status", "Logged in successfully.");
+				currentSession.setAttribute("role", service.findUserByEmail(email).getRoleId());
 				resp.sendRedirect(req.getContextPath() + UrlConst.HOME);
 			} else
 				resp.sendRedirect(req.getContextPath() + UrlConst.AUTH_LOGIN);

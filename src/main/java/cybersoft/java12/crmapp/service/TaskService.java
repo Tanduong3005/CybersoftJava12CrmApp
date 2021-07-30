@@ -32,9 +32,6 @@ public class TaskService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("nhu quan que");
-		System.out.println(task.getStartDate());
-		System.out.println(task.getName());
 		return task;
 	}
 

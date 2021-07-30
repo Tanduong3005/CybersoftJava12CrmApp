@@ -137,6 +137,7 @@ public class TaskServlet extends HttpServlet {
 
 	private void postTaskAdd(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		TaskCreateDto dto = extractDtoFromReq(req);
+		service.addNewTask(dto);
 		resp.sendRedirect(req.getContextPath() + UrlConst.TASK_DASHBOARD);
 	}
 

@@ -1,6 +1,5 @@
 package cybersoft.java12.crmapp.dto;
 
-import java.sql.Date;
 
 public class TaskCreateDto {
 	private String name;

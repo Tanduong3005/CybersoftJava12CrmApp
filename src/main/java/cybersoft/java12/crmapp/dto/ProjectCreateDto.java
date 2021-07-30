@@ -1,13 +1,12 @@
 package cybersoft.java12.crmapp.dto;
 
-import java.sql.Date;
 
 
 public class ProjectCreateDto {
 	private String name;
 	private String description;
-	private Date startDate;
-	private Date endDate;
+	private String startDate;
+	private String endDate;
 	private int owner;
 
 	public String getName() {
@@ -26,19 +25,19 @@ public class ProjectCreateDto {
 		this.description = description;
 	}
 
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 
@@ -50,8 +49,7 @@ public class ProjectCreateDto {
 		this.owner = owner;
 	}
 
-	public ProjectCreateDto(String name, String description, Date startDate, Date endDate, int owner) {
-		super();
+	public ProjectCreateDto(String name, String description, String startDate, String endDate, int owner) {
 		this.name = name;
 		this.description = description;
 		this.startDate = startDate;

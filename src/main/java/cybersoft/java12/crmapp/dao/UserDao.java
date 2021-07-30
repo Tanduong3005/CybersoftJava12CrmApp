@@ -67,16 +67,15 @@ public class UserDao {
 		List<Role> roles = new ArrayList<>();
 		User user = null;
 		Connection connection = MySqlConnection.getConnection();
-		String query = 	"SELECT u.id as id, u.name as name, u.email as email, u.password as password, u.phone as phone , "
-				+ 		"u.address as address, r.id as role_id, r.name as role_name, r.description as role_description "
-				+ 		"FROM user u, role r WHERE u.role_id = r.id "
-				+ 		"AND u.id = ?";
+		String query = "SELECT u.id as id, u.name as name, u.email as email, u.password as password, u.phone as phone , "
+				+ "u.address as address, r.id as role_id, r.name as role_name, r.description as role_description "
+				+ "FROM user u, role r WHERE u.role_id = r.id " + "AND u.id = ?";
 		try {
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, id);
-			
+
 			ResultSet resultSet = statement.executeQuery();
-			while(resultSet.next()) {
+			while (resultSet.next()) {
 				user = new User();
 
 				user.setId(resultSet.getInt("id"));
@@ -85,7 +84,6 @@ public class UserDao {
 				user.setPassword(resultSet.getString("password"));
 				user.setPhone(resultSet.getString("phone"));
 				user.setAddress(resultSet.getString("address"));
-
 
 				int roleId = resultSet.getInt("role_id");
 				Role role = getRoleFromList(roles, roleId);
@@ -104,13 +102,13 @@ public class UserDao {
 		} catch (SQLException e) {
 			System.out.println("Unable to connect to database.");
 			e.printStackTrace();
-		}finally {
+		} finally {
 			connection.close();
 		}
 		return user;
-		
+
 	}
-	
+
 	public void deleteById(int id) throws SQLException {
 		String query = "DELETE FROM user WHERE id = ?";
 		Connection connection = MySqlConnection.getConnection();
@@ -133,7 +131,7 @@ public class UserDao {
 //	public List<Role> getAllRole(){
 //		List<Role> roles = new ArrayList<>();
 //	}
-	
+
 	private Role getRoleFromList(List<Role> roles, int roleId) {
 		for (Role role : roles)
 			if (role.getId() == roleId)
@@ -169,7 +167,7 @@ public class UserDao {
 	public void update(UserCreateDto dto, int idToUpdate) throws SQLException {
 		Connection connection = MySqlConnection.getConnection();
 		String query = "UPDATE user SET name = ?, email = ?, password = ?, phone = ?, address = ?, role_id = ? WHERE id = ?";
-		int result=0;
+		int result = 0;
 		try {
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, dto.getName());
@@ -186,6 +184,39 @@ public class UserDao {
 		} finally {
 			connection.close();
 		}
+	}
+
+	public List<User> findStaffNotJoinProjectStaff(int id) throws SQLException {
+		List<User> users = new LinkedList<>();
+		List<Role> roles = new ArrayList<>();
+
+		Connection connection = MySqlConnection.getConnection();
+		String query = "SELECT u.id as user_id, u.name as user_name "
+				+ "FROM user u WHERE id NOT IN (SELECT user_id FROM project_user  WHERE project_id  = ?)";
+
+		try {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, id);
+			ResultSet resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				User user = new User();
+
+				user.setId(resultSet.getInt("user_id"));
+				user.setName(resultSet.getString("user_name"));
+
+
+				users.add(user);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Unable to connect to database.");
+			e.printStackTrace();
+		} finally {
+			connection.close();
+		}
+
+		return users;
 	}
 
 }
